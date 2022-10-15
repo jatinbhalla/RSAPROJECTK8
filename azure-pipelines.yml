@@ -30,7 +30,7 @@ steps:
   inputs:
     containerregistrytype: 'Azure Container Registry'
     azureSubscription: 'Pay-As-You-Go(9112ff5f-1a9e-411d-b35f-4ec8bd46878a)'
-    azureContainerRegistry: 'jatinmicro.azurecr.io'
+    azureContainerRegistry: 'jatinbhalla1234.azurecr.io'
     dockerComposeFile: 'docker-compose.ci.build.yml'
     action: 'Run services'
     detached: false
