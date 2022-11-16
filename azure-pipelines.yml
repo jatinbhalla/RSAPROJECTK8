@@ -29,7 +29,7 @@ steps:
   displayName: 'Run services'
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'Pay-As-You-Go(1)(9112ff5f-1a9e-411d-b35f-4ec8bd46878a)'
+    azureSubscription: 'Pay-As-You-Go(9112ff5f-1a9e-411d-b35f-4ec8bd46878a)'
     azureContainerRegistry: '{"loginServer":"kubenewacr.azurecr.io", "id" : "/subscriptions/9112ff5f-1a9e-411d-b35f-4ec8bd46878a/resourceGroups/akshandsonlab/providers/Microsoft.ContainerRegistry/registries/kubenewacr"}'
     dockerComposeFile: 'docker-compose.ci.build.yml'
     action: 'Run services'
@@ -39,7 +39,7 @@ steps:
   displayName: 'Build services'
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'Pay-As-You-Go(2)(9112ff5f-1a9e-411d-b35f-4ec8bd46878a)'
+    azureSubscription: 'Pay-As-You-Go(9112ff5f-1a9e-411d-b35f-4ec8bd46878a)'
     azureContainerRegistry: '{"loginServer":"kubenewacr.azurecr.io", "id" : "/subscriptions/9112ff5f-1a9e-411d-b35f-4ec8bd46878a/resourceGroups/akshandsonlab/providers/Microsoft.ContainerRegistry/registries/kubenewacr"}'
     dockerComposeFile: 'docker-compose.yml'
     dockerComposeFileArgs: 'DOCKER_BUILD_SOURCE='
@@ -50,7 +50,7 @@ steps:
   displayName: 'Push services'
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'Pay-As-You-Go(3)(9112ff5f-1a9e-411d-b35f-4ec8bd46878a)'
+    azureSubscription: 'Pay-As-You-Go(9112ff5f-1a9e-411d-b35f-4ec8bd46878a)'
     azureContainerRegistry: '{"loginServer":"kubenewacr.azurecr.io", "id" : "/subscriptions/9112ff5f-1a9e-411d-b35f-4ec8bd46878a/resourceGroups/akshandsonlab/providers/Microsoft.ContainerRegistry/registries/kubenewacr"}'
     dockerComposeFile: 'docker-compose.yml'
     dockerComposeFileArgs: 'DOCKER_BUILD_SOURCE='
@@ -61,7 +61,7 @@ steps:
   displayName: 'Lock services'
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'Pay-As-You-Go(4)(9112ff5f-1a9e-411d-b35f-4ec8bd46878a)'
+    azureSubscription: 'Pay-As-You-Go(9112ff5f-1a9e-411d-b35f-4ec8bd46878a)'
     azureContainerRegistry: '{"loginServer":"kubenewacr.azurecr.io", "id" : "/subscriptions/9112ff5f-1a9e-411d-b35f-4ec8bd46878a/resourceGroups/akshandsonlab/providers/Microsoft.ContainerRegistry/registries/kubenewacr"}'
     dockerComposeFile: 'docker-compose.yml'
     dockerComposeFileArgs: 'DOCKER_BUILD_SOURCE='
