@@ -1,0 +1,77 @@
+name: Build and Deploy with Docker Compose
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  ACR_LOGIN_SERVER: kubenewacr.azurecr.io
+  IMAGE_TAG: ${{ github.run_number }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Replace tokens in appsettings.json
+      - name: Replace tokens in appsettings.json
+        uses: cschleiden/replace-tokens@v1
+        with:
+          tokenPrefix: '#{'
+          tokenSuffix: '}#'
+        env:
+          connectionString: ${{ secrets.CONNECTION_STRING }}
+        # Customize as needed
+
+      # Replace tokens in mhc-aks.yaml
+      - name: Replace tokens in mhc-aks.yaml
+        uses: cschleiden/replace-tokens@v1
+        with:
+          tokenPrefix: '__'
+          tokenSuffix: '__'
+          files: mhc-aks.yaml
+        env:
+          TOKEN_1: value1
+          TOKEN_2: value2
+
+      # Log in to Azure Container Registry
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Docker Login to ACR
+        run: echo ${{ secrets.AZURE_ACR_PASSWORD }} | docker login ${{ env.ACR_LOGIN_SERVER }} --username ${{ secrets.AZURE_ACR_USERNAME }} --password-stdin
+
+      # Run services (Optional if needed for tests)
+      - name: Run Docker Compose services
+        run: |
+          docker-compose -f docker-compose.ci.build.yml up
+
+      # Build services
+      - name: Build Docker Compose services
+        run: |
+          docker-compose -f docker-compose.yml build --build-arg DOCKER_BUILD_SOURCE=
+
+      # Tag and push images
+      - name: Push Docker Images
+        run: |
+          docker-compose -f docker-compose.yml push
+
+      # Copy deployment files
+      - name: Copy deployment files
+        run: |
+          mkdir -p artifacts
+          cp **/mhc-aks.yaml artifacts/ || true
+          find . -name '*.dacpac' -exec cp {} artifacts/ \;
+
+      # Upload artifact
+      - name: Upload deployment artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy
+          path: artifacts
